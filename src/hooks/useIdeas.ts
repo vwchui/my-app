@@ -35,7 +35,7 @@ export function useIdeas() {
     } catch {
       /* storage unavailable or full — keep working in memory */
     }
-  }, [ideas]);
+  }, []);
 
   const addIdea = React.useCallback((text: string) => {
     setIdeas((prev) => [...prev, { id: crypto.randomUUID(), text, done: false }]);
