@@ -10,10 +10,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "paths": {
-      "@livingdesign/react": ["./src/index.ts"]
-    }
+    "noEmit": true
   },
   "include": ["src"]
 }

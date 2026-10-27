@@ -10,18 +10,6 @@
           }
         ]
       }
-    ],
-    "Stop": [
-      {
-        "matcher": ".*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node scripts/a11y/run-endhook.mjs --agent claude",
-            "timeout": 55
-          }
-        ]
-      }
     ]
   }
 }

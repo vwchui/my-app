@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { Checkbox, Icon, IconButton, Tag, VisuallyHidden } from '@walmart/ld-kit';
 import type { Idea } from '../hooks/useIdeas';
 
 interface IdeaItemProps {
   idea: Idea;
-  /** 1-based priority rank; undefined for crossed-off ideas. */
   rank?: number;
   canMoveUp: boolean;
   canMoveDown: boolean;
@@ -14,69 +12,60 @@ interface IdeaItemProps {
 }
 
 export function IdeaItem({ idea, rank, canMoveUp, canMoveDown, onToggle, onMove, onRemove }: IdeaItemProps) {
+  const checkboxId = `idea-${idea.id}`;
+
   return (
-    <li
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 12,
-        flexWrap: 'wrap',
-        padding: '12px 16px',
-        border: '1px solid var(--ld-semantic-color-stroke-default, #c8c9cc)',
-        borderRadius: 8,
-        background: 'var(--ld-semantic-color-surface-default, #fff)',
-      }}
-    >
-      <span
-        style={{ minWidth: 28, fontWeight: 700, color: 'var(--ld-semantic-color-text-subtle, #505050)' }}
-        aria-hidden="true"
-      >
+    <li className="idea">
+      <span className="idea__rank" aria-hidden="true">
         {rank !== undefined ? `#${rank}` : ''}
       </span>
 
-      <div style={{ flex: '1 1 200px', minWidth: 0 }}>
-        <Checkbox
+      <div className="idea__body">
+        <input
+          id={checkboxId}
+          type="checkbox"
           checked={idea.done}
           onChange={() => onToggle(idea.id)}
-          label={
-            <span style={idea.done ? { textDecoration: 'line-through' } : undefined}>
-              {rank !== undefined && <VisuallyHidden>{`Priority ${rank}: `}</VisuallyHidden>}
-              {idea.text}
-            </span>
-          }
         />
+        <label htmlFor={checkboxId} className={idea.done ? 'idea__label idea__label--done' : 'idea__label'}>
+          {rank !== undefined && <span className="visually-hidden">{`Priority ${rank}: `}</span>}
+          {idea.text}
+        </label>
       </div>
 
-      {idea.done && (
-        <Tag color="positive" leading={<Icon name="Check" decorative />}>
-          Done
-        </Tag>
-      )}
+      {idea.done && <span className="tag">✓ Done</span>}
 
-      <div style={{ display: 'flex', gap: 4 }}>
+      <div className="idea__actions">
         {!idea.done && (
           <>
-            <IconButton
-              a11yLabel={`Raise priority of ${idea.text}`}
-              size="small"
+            <button
+              type="button"
+              className="icon-button"
+              aria-label={`Raise priority of ${idea.text}`}
               disabled={!canMoveUp}
               onClick={() => onMove(idea.id, -1)}
             >
-              <Icon name="ArrowUp" decorative />
-            </IconButton>
-            <IconButton
-              a11yLabel={`Lower priority of ${idea.text}`}
-              size="small"
+              <span aria-hidden="true">↑</span>
+            </button>
+            <button
+              type="button"
+              className="icon-button"
+              aria-label={`Lower priority of ${idea.text}`}
               disabled={!canMoveDown}
               onClick={() => onMove(idea.id, 1)}
             >
-              <Icon name="ArrowDown" decorative />
-            </IconButton>
+              <span aria-hidden="true">↓</span>
+            </button>
           </>
         )}
-        <IconButton a11yLabel={`Delete ${idea.text}`} size="small" onClick={() => onRemove(idea.id)}>
-          <Icon name="Trash" decorative />
-        </IconButton>
+        <button
+          type="button"
+          className="icon-button"
+          aria-label={`Delete ${idea.text}`}
+          onClick={() => onRemove(idea.id)}
+        >
+          <span aria-hidden="true">🗑</span>
+        </button>
       </div>
     </li>
   );
