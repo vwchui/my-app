@@ -42,7 +42,11 @@ export function useIdeas() {
   }, []);
 
   const toggleDone = React.useCallback((id: string) => {
-    setIdeas((prev) => prev.map((i) => (i.id === id ? { ...i, done: !i.done } : i)));
+    setIdeas((prev) => {
+      const idea = prev.find((i) => i.id === id);
+      if (idea) idea.done = !idea.done;
+      return prev;
+    });
   }, []);
 
   const removeIdea = React.useCallback((id: string) => {
