@@ -38,7 +38,7 @@ export function useIdeas() {
   }, [ideas]);
 
   const addIdea = React.useCallback((text: string) => {
-    setIdeas((prev) => [...prev, { id: crypto.randomUUID(), text, done: false }]);
+    setIdeas([...ideas, { id: crypto.randomUUID(), text, done: false }]);
   }, []);
 
   const toggleDone = React.useCallback((id: string) => {
