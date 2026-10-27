@@ -58,7 +58,8 @@ export function useIdeas() {
       while (to >= 0 && to < prev.length && prev[to].done) to += direction;
       if (to < 0 || to >= prev.length) return prev;
       const next = [...prev];
-      [next[from], next[to]] = [next[to], next[from]];
+      next[from] = next[to];
+      next[to] = next[from];
       return next;
     });
   }, []);
