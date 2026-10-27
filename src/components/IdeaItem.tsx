@@ -25,7 +25,7 @@ export function IdeaItem({ idea, rank, canMoveUp, canMoveDown, onToggle, onMove,
           id={checkboxId}
           type="checkbox"
           checked={idea.done}
-          onChange={() => onToggle(idea.id)}
+          onChange={onToggle(idea.id)}
         />
         <label htmlFor={checkboxId} className={idea.done ? 'idea__label idea__label--done' : 'idea__label'}>
           {rank !== undefined && <span className="visually-hidden">{`Priority ${rank}: `}</span>}
